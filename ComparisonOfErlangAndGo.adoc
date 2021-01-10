@@ -11,7 +11,7 @@
 -- Rob Pike, Heroku's Waza conference
 
 Parallel Programming and Concurrent Programming are two concepts of Programming Languages that seem to refer to the same concept. They are used whenever multitasking is needed in coding. The problem with this is that they are not the same thing. 
-Concurrent means that there are multiple tasks that are executed in overlapping time periods whereas parallel means multiple tasks are executed the same time. Concurrency is used in context of the way programs can run. Parallelism requires at least a dual-core processor or else the program can't be executed truly parallel. <<Gupt>>
+Concurrent means that there are multiple tasks that are executed in overlapping time periods whereas parallel means multiple tasks are executed at the same time. Concurrency is used in context of the way programs can run. Parallelism requires at least a dual-core processor or else the program can't be executed truly parallel. <<Gupt>>
 
 .Concurrency and Parallel Programming <<Gup19>>
 [#img-concurrencyAndParallel]
