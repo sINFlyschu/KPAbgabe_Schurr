@@ -242,7 +242,7 @@ In the Erlang code the process lives as long as it waits for the message "okay".
 === References
 
 [bibliography]
-== Used directly in Text
+==== Used directly in Text
 
 * [[[Bla20]]] Vincent Blanchon. Go: How Are Deadlocks Triggered?. https://medium.com/a-journey-with-go/go-how-are-deadlocks-triggered-2305504ac019, 2020, Last Visit: 05.01.2021
 
@@ -274,7 +274,7 @@ In the Erlang code the process lives as long as it waits for the message "okay".
 
 
 [bibliography]
-== Further used sources
+==== Further used sources
 
 * [[[All16]]] Mark Allen. Erlang and Go concurrency. https://github.com/mrallen1/erlang-n-go/blob/master/Erlang%20and%20Go%20Concurrency.pdf, 2016, Last Visit: 27.12.2020
 
