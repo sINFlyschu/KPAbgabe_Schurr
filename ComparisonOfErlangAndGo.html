@@ -517,7 +517,7 @@ func main() {
 <div class="sect2">
 <h3 id="_concurrent_programming_in_erlang">Concurrent Programming in Erlang</h3>
 <div class="paragraph">
-<p>Erlang is a programming language that was created for the telecommunication company Ericsson. It was designed with concurrency in mind as this is a concept that is very important in telecommunication. <a href="#etf">[etf]</a> The way that concurrency is implemented in Erlang is called the Actors Model. This means that programs are divided into separate parts and those parts communicate over direct messages. The different parts are the actors and are separate processes. The actors can act independently from each other. <a href="#Mil09">[Mil09]</a>
+<p>Erlang is a programming language that was created for the telecommunication company Ericsson. It was designed with concurrency in mind as this is a concept that is very important in telecommunication. <a href="#erf">[erf]</a> The way that concurrency is implemented in Erlang is called the Actors Model. This means that programs are divided into separate parts and those parts communicate over direct messages. The different parts are the actors and are separate processes. The actors can act independently from each other. <a href="#Mil09">[Mil09]</a>
 In Erlang the name for the thread like concept is process. The processes are spawned by executing a spawn function. This function gets a couple of parameters like the module name that executes the process and the function name that is spawned as a process. It also returns a unique ID called the pid. This stands for process identifier and can also be found in OS. There is also the possibility to register a specific name to a corresponding pid. This is necessary for two independently started processes that need to communicate with each other. For sending messages one of those identifiers must be known to the sending process. <a href="#con">[con]</a></p>
 </div>
 <div class="paragraph">
@@ -535,7 +535,7 @@ Another difference is the handling of more than one message. As mentioned earlie
 As already explained in Golang a channel needs the affirmation that the message was received. This means that the communication in Golang code is synchronous. The sender wants a reply from the receiver. Erlangs message passing is asynchronous. If a process sends a message, it will then continue with other instructions. It is asynchronous. That is why Erlangs processes need a message queue whereas Golang&#8217;s don&#8217;t need one.</p>
 </div>
 <div class="paragraph">
-<p>But it shows that Golang has a feature that Erlang lacks on purpose. Golang is able to use mutual exclusion (mutex). Mutex is one way to tackle the problem of deadlocks in programs. Deadlocks are one of the main problems in concurrent programming. It occurs if e.g. two threads try to get the same two resources but because each of them already got one, the other thread can&#8217;t reach the second resource it needs. That way both threads stay in a state where they try to get the second resource but don&#8217;t let go of the first one. This way they block each other. By using mutex in code, the accessibility of a variable can be controlled. In Golang this is managed through a standard library that provides two methods called "Lock" and "Unlock". <a href="#syn">[syn]</a> Erlang is not meant to use such things. There is not even the possibility to have variables that are reachable in every process. Erlang tries to work against such things by not sharing any variables. Even the messages that are sent are only copies of the values and not pointers to the address of a variable. There aren&#8217;t even global variables in Erlang, and it is best practice to send the information that is needed through the parameters of a function. That is why there is no shared memory. The processes are meant to be individual are not connected. Still there is the possibility of deadlocks in Erlang. This happens e.g. if a receive block doesn&#8217;t get any messages that it can match. That way it&#8217;s possible that a process waits for an answer and stays in the receive block forever. <a href="#Chr11">[Chr11]</a> In Golang the same thing can happen, but in this case the deadlock happens because of messages not being received. That is the case if there are more working, sending goroutines than there are waiting, receiving goroutines at a time. They can be found by the deadlock detector and send a panic. <a href="#Bla20">[Bla20]</a></p>
+<p>But it shows that Golang has a feature that Erlang lacks on purpose. Golang is able to use mutual exclusion (mutex). Mutex is one way to tackle the problem of deadlocks in programs. Deadlocks are one of the main problems in concurrent programming. It occurs if e.g. two threads try to get the same two resources but because each of them already got one, the other thread can&#8217;t reach the second resource it needs. That way both threads stay in a state where they try to get the second resource but don&#8217;t let go of the first one. This way they block each other. By using mutex in code, the accessibility of a variable can be controlled. In Golang this is managed through a standard library that provides two methods called "Lock" and "Unlock". <a href="#syn">[syn]</a> Erlang is not meant to use such things. There is not even the possibility to have variables that are reachable in every process. Erlang tries to work against such things by not sharing any variables. Even the messages that are sent are only copies of the values and not pointers to the address of a variable. There aren&#8217;t even global variables in Erlang, and it is best practice to send the information that is needed through the parameters of a function. That is why there is no shared memory. The processes are meant to be individual and not connected. Still there is the possibility of deadlocks in Erlang. This happens e.g. if a receive block doesn&#8217;t get any messages that it can match. That way it&#8217;s possible that a process waits for an answer and stays in the receive block forever. <a href="#Chr11">[Chr11]</a> In Golang the same thing can happen, but in this case the deadlock happens because of messages not being received. That is the case if there are more working, sending goroutines than there are waiting, receiving goroutines at a time. They can be found by the deadlock detector and send a panic. <a href="#Bla20">[Bla20]</a></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Comparison of Erlang and Go</caption>
@@ -580,7 +580,7 @@ As already explained in Golang a channel needs the affirmation that the message 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Blocking mechanism</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">channels - goroutines (sender) blocked until receiver received message and answered the sender; if channel is buffered, this only happens if buffer is full</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">receive block - if message can&#8217;t be matched to given pattern in receiver, process stoped until new message arrives</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">receive block - if message can&#8217;t be matched to given pattern in receiver, process stopped until new message arrives</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Mutual exclusion</p></td>
@@ -603,7 +603,7 @@ As already explained in Golang a channel needs the affirmation that the message 
 <h3 id="_comparison_of_code_example">Comparison of Code Example</h3>
 <div class="paragraph">
 <p>For the purpose of the comparison of Erlang and Golang in view of concurrency programming, the following example was chosen. A program should calculate the main properties of a sphere. The only value that should be taken into consideration is the radius. It should be a float value. The main properties, that were chosen, are the surface area, the circular area and the volume of the inside of the sphere. Every property should be calculated in a separate process/goroutine.
-The following source code examples are from crucial parts of the program.</p>
+The following source code examples are from crucial parts of the program. The complete source code can be found in the folders "erlangCode" and "goCode".</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -745,7 +745,7 @@ The following source code examples are from crucial parts of the program.</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>The function "allResults()" was used in different ways in the example code. The Golang "allResults()" function waits for a message from one of the calculating processes and is then able to print the received value in dependence of the name of the property. After all the properties were calculated and printed, the main() function gets a message to be informed about the end of the task. All the channels are then closed. The goroutine doesn&#8217;t die because it contains a for-loop. Otherwise it would end after receiving one message.</p>
+<p>The function "allResults()" was used in different ways in the example code. The Golang "allResults()" function waits for a message from one of the calculating processes and is then able to print the received value in dependence of the name of the property. After all the properties were calculated and printed, the "main()"" function gets a message to be informed about the end of the task. All the channels are then closed. The goroutine doesn&#8217;t die because it contains a for-loop. Otherwise it would end after receiving one message.</p>
 </div>
 <div class="paragraph">
 <p>In the Erlang example the "allResults()" function is used to demonstrate the usage of patterns within a receive block. It also shows how a process can get the pid from another process without being told about it from the beginning. This process continues because after each message it starts the "allResults()" function all other again. This again shows an interesting attribute of Erlang processes. The pid and the message queue are not reset although the function is called again because the process is still the same and only the instructions changed. This is very logical but might seem strange in the beginning because calling the function again seems to be the same as starting a new process. But it is not. A process is always started by using the function "spawn()".</p>
@@ -796,21 +796,22 @@ The following source code examples are from crucial parts of the program.</p>
 </div>
 <div class="paragraph">
 <p>In this part of the example the code is nearly the same. The only difference is that the Erlang code has a receive block. This is only the case because it was specifically written that way. It doesn&#8217;t have to be like that and is only for reasons of demonstrating the possibility of using simple patterns. In both codes the goroutine or process is dead by the end of it. In the Golang example the goroutine dies after getting the message that its message was received. For the goroutine to stay alive it would have needed something like a for-loop.
-In the Erlang code the process lives as long as it waits for the message "okay". If there wasn&#8217;t the receive block, then the process would immediately end after sending the message to the “allResults()” process. The reason for the different behaviour of the two code examples is that one is synchronous message passing, the other is asynchronous. But there is no real difference in the code itself.</p>
+In the Erlang code the process lives as long as it waits for the message "okay". If there wasn&#8217;t the receive block, then the process would immediately end after sending the message to the “allResults()” process. The reason for the different behaviour of the two code examples is, that one is synchronous message passing, the other is asynchronous. But there is no real difference in the code itself.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_references">References</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_used_directly_in_text">Used directly in Text</h2>
+<div class="sectionbody">
 <div class="ulist bibliography">
 <ul class="bibliography">
 <li>
-<p><a id="All16"></a>[All16] Mark Allen. Erlang and Go concurrency. <a href="https://github.com/mrallen1/erlang-n-go/blob/master/Erlang%20and%20Go%20Concurrency.pdf" class="bare">https://github.com/mrallen1/erlang-n-go/blob/master/Erlang%20and%20Go%20Concurrency.pdf</a>, 2016, Last Visit: 27.12.2020</p>
-</li>
-<li>
 <p><a id="Bla20"></a>[Bla20] Vincent Blanchon. Go: How Are Deadlocks Triggered?. <a href="https://medium.com/a-journey-with-go/go-how-are-deadlocks-triggered-2305504ac019" class="bare">https://medium.com/a-journey-with-go/go-how-are-deadlocks-triggered-2305504ac019</a>, 2020, Last Visit: 05.01.2021</p>
-</li>
-<li>
-<p><a id="Cha18"></a>[Cha18] Joe Chasinga. Concurrency in Go vs Erlang. <a href="https://dev.to/pieohpah/concurrency-in-go-vs-erlang-595a#:~:text=Go%20has%20something%20close%20to,and%20it%27s%20called%20multiple%20returns.&amp;text=One%20difference%20to%20note%20is,as%20image%20processing%20than%20Erlang" class="bare">https://dev.to/pieohpah/concurrency-in-go-vs-erlang-595a#:~:text=Go%20has%20something%20close%20to,and%20it%27s%20called%20multiple%20returns.&amp;text=One%20difference%20to%20note%20is,as%20image%20processing%20than%20Erlang</a>, 2018, Last Visit: 28.12.2020</p>
 </li>
 <li>
 <p><a id="Chr11"></a>[Chr11] Maria Christakis and Konstantinos Sagonas. Static Detection of Deadlocks in Erlang. <a href="https://mariachris.github.io/Pubs/TFP-2011.pdf" class="bare">https://mariachris.github.io/Pubs/TFP-2011.pdf</a>, 2011, Last Visit: 05.01.2021</p>
@@ -840,16 +841,7 @@ In the Erlang code the process lives as long as it waits for the message "okay".
 <p><a id="Kha18"></a>[Kha18] Kartik Khare. Why goroutines are not lightweight threads?. <a href="https://codeburst.io/why-goroutines-are-not-lightweight-threads-7c460c1f155f" class="bare">https://codeburst.io/why-goroutines-are-not-lightweight-threads-7c460c1f155f</a>, 2018, Last Visit: 02.01.2021</p>
 </li>
 <li>
-<p><a id="Lar08"></a>[Lar08] Jim Larson. Erlang for Concurrent Programming, The Concurrency Problem Vol. 6 Nr. 5. <a href="https://www.cs.helsinki.fi/u/kerola/rio/papers/larson_erlang.htm" class="bare">https://www.cs.helsinki.fi/u/kerola/rio/papers/larson_erlang.htm</a>, 2008, Last Visit: 03.01.2021</p>
-</li>
-<li>
-<p><a id="lye"></a>[lye] The Hitchhiker&#8217;s Guide to Concurrency. <a href="https://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency" class="bare">https://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency</a>, Last Visit: 03.01.2021</p>
-</li>
-<li>
 <p><a id="Mil09"></a>[Mil09] Alex Miller. Understanding actor concurrency, Part 1: Actors in Erlang. <a href="https://www.infoworld.com/article/2077999/understanding-actor-concurrency-part-1-actors-in-erlang.html" class="bare">https://www.infoworld.com/article/2077999/understanding-actor-concurrency-part-1-actors-in-erlang.html</a>, 2009, Last Visit: 04.01.2021</p>
-</li>
-<li>
-<p><a id="Ram17"></a>[Ram17] Naveen Ramanathan. Part 22: Channels. <a href="https://golangbot.com/channels/" class="bare">https://golangbot.com/channels/</a>, 2017, Last Visit: 04.01.2021</p>
 </li>
 <li>
 <p><a id="run"></a>[run] Package runtime. <a href="https://golang.org/pkg/runtime/" class="bare">https://golang.org/pkg/runtime/</a>, Last Visit: 04.01.2020</p>
@@ -864,11 +856,34 @@ In the Erlang code the process lives as long as it waits for the message "okay".
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_further_used_sources">Further used sources</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a id="All16"></a>[All16] Mark Allen. Erlang and Go concurrency. <a href="https://github.com/mrallen1/erlang-n-go/blob/master/Erlang%20and%20Go%20Concurrency.pdf" class="bare">https://github.com/mrallen1/erlang-n-go/blob/master/Erlang%20and%20Go%20Concurrency.pdf</a>, 2016, Last Visit: 27.12.2020</p>
+</li>
+<li>
+<p><a id="Cha18"></a>[Cha18] Joe Chasinga. Concurrency in Go vs Erlang. <a href="https://dev.to/pieohpah/concurrency-in-go-vs-erlang-595a#:~:text=Go%20has%20something%20close%20to,and%20it%27s%20called%20multiple%20returns.&amp;text=One%20difference%20to%20note%20is,as%20image%20processing%20than%20Erlang" class="bare">https://dev.to/pieohpah/concurrency-in-go-vs-erlang-595a#:~:text=Go%20has%20something%20close%20to,and%20it%27s%20called%20multiple%20returns.&amp;text=One%20difference%20to%20note%20is,as%20image%20processing%20than%20Erlang</a>, 2018, Last Visit: 28.12.2020</p>
+</li>
+<li>
+<p><a id="Lar08"></a>[Lar08] Jim Larson. Erlang for Concurrent Programming, The Concurrency Problem Vol. 6 Nr. 5. <a href="https://www.cs.helsinki.fi/u/kerola/rio/papers/larson_erlang.htm" class="bare">https://www.cs.helsinki.fi/u/kerola/rio/papers/larson_erlang.htm</a>, 2008, Last Visit: 03.01.2021</p>
+</li>
+<li>
+<p><a id="lye"></a>[lye] The Hitchhiker&#8217;s Guide to Concurrency. <a href="https://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency" class="bare">https://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency</a>, Last Visit: 03.01.2021</p>
+</li>
+<li>
+<p><a id="Ram17"></a>[Ram17] Naveen Ramanathan. Part 22: Channels. <a href="https://golangbot.com/channels/" class="bare">https://golangbot.com/channels/</a>, 2017, Last Visit: 04.01.2021</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-08 21:26:51 +0100
+Last updated 2021-01-10 09:57:01 +0100
 </div>
 </div>
 </body>
